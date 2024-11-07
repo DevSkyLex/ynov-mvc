@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+  {% if pokemons is empty %}
+    <h1>Aucun pokémon disponible pour le moment...</h1>
+  {% else %}
+    <h1>Les pokémons disponibles :</h1>
+    {% for pokemon in pokemons %}
+      <h2>{{ pokemon.name }}</h2>
+      <p>{{ pokemon.type }}</p>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
