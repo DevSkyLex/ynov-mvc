@@ -1,0 +1,35 @@
+{% extends 'pokemon/pokemon.html.twig' %}
+
+{% block title %}Ajouter un pokemon{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card__header">
+      <div class="card__header-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+      </div>
+
+      <h2 class="card__header-title">Ajouter un Pokemon</h2>
+    </div>
+
+    {{ form_start(form, { 'attr': { 'data-turbo': 'false' } }) }}
+      <div class="form__row">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        <div class="form__error">
+          {{ form_errors(form.name) }}
+        </div>
+      </div>
+
+      <div class="form__row">
+        {{ form_label(form.type) }}
+        {{ form_widget(form.type) }}
+        <div class="form__error">
+          {{ form_errors(form.type) }}
+        </div>
+      </div>
+      {{ form_row(form.submit, { 'label': 'Ajouter' }) }}
+      {{ form_errors(form) }}
+    {{ form_end(form) }}
+  </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'pokemon/pokemon.html.twig' %}
+
+{% block title %}Hello PokemonController!{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card__header">
+      <div class="card__header-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
+      </div>
+
+      <h2 class="card__header-title">Modifier un Pokemon ({{ pokemon.name }})</h2>
+    </div>
+
+    {{ form_start(form, { 'attr': { 'data-turbo': 'false' } }) }}
+      <div class="form__row">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        <div class="form__error">
+          {{ form_errors(form.name) }}
+        </div>
+      </div>
+
+      <div class="form__row">
+        {{ form_label(form.type) }}
+        {{ form_widget(form.type) }}
+        <div class="form__error">
+          {{ form_errors(form.type) }}
+        </div>
+      </div>
+      {{ form_row(form.submit, { 'label': 'Modifier' }) }}
+      {{ form_errors(form) }}
+    {{ form_end(form) }}
+  </div>
+{% endblock %}

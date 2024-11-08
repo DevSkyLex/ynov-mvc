@@ -11,7 +11,11 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="body">
+      {% block header %}{% endblock %}
+
+      <main class="content">
+        {% block main %}{% endblock %}
+      </main>
     </body>
 </html>

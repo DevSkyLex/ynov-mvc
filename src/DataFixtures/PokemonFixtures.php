@@ -26,6 +26,70 @@ class PokemonFixtures extends Fixture
         [
           'name' => 'Pikachu',
           'type' => 'Electric',
+        ],
+        [
+          'name' => 'Jigglypuff',
+          'type' => 'Normal',
+        ],
+        [
+          'name' => 'Meowth',
+          'type' => 'Normal',
+        ],
+        [
+          'name' => 'Psyduck',
+          'type' => 'Water',
+        ],
+        [
+          'name' => 'Snorlax',
+          'type' => 'Normal',
+        ],
+        [
+          'name' => 'Magikarp',
+          'type' => 'Water',
+        ],
+        [
+          'name' => 'Eevee',
+          'type' => 'Normal',
+        ],
+        [
+          'name' => 'Pidgey',
+          'type' => 'Normal',
+        ],
+        [
+          'name' => 'Rattata',
+          'type' => 'Normal',
+        ],
+        [
+          'name' => 'Zubat',
+          'type' => 'Poison',
+        ],
+        [
+          'name' => 'Geodude',
+          'type' => 'Rock',
+        ],
+        [
+          'name' => 'Gastly',
+          'type' => 'Ghost',
+        ],
+        [
+          'name' => 'Onix',
+          'type' => 'Rock',
+        ],
+        [
+          'name' => 'Drowzee',
+          'type' => 'Psychic',
+        ],
+        [
+          'name' => 'Krabby',
+          'type' => 'Water',
+        ],
+        [
+          'name' => 'Voltorb',
+          'type' => 'Electric',
+        ],
+        [
+          'name' => 'Cubone',
+          'type' => 'Ground',
         ]
       ];
 

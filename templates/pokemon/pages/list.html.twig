@@ -1,0 +1,126 @@
+{% extends 'pokemon/pokemon.html.twig' %}
+
+{% block title %}Hello PokemonController!
+{% endblock %}
+
+{% block content %}
+	<div class="card">
+		<div class="card__header">
+			<div class="card__header-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></svg>
+			</div>
+
+			<h2 class="card__header-title">Liste des Pokémons</h2>
+		</div>
+
+		<div class="table-wrapper">
+			<div class="table-wrapper__table">
+				<table class="table">
+					<thead class="table__head">
+						<tr class="table__row">
+							<th class="table__header">Nom</th>
+							<th class="table__header">Type</th>
+							<th class="table__header"></th>
+						</tr>
+					</thead>
+					<tbody class="table__body">
+						{% for pokemon in pagination %}
+							<tr class="table__row">
+								<td class="table__data">{{ pokemon.name }}</td>
+								<td class="table__data">{{ pokemon.type }}</td>
+								<td class="table__data table__data">
+									<div class="table__actions">
+										<div class="btn-group">
+											<a href="{{ path('app_pokemon_delete', {id: pokemon.id}) }}" class="btn btn--secondary btn--square">
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+											</a>
+											<a href="{{ path('app_pokemon_edit', {id: pokemon.id}) }}" class="btn btn--secondary btn--square">
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
+											</a>
+
+											<a href="{{ path('app_pokemon_show', {id: pokemon.id}) }}" class="btn btn--secondary btn--square">
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+											</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						{% else %}
+							<tr class="table__row">
+								<td class="table__data" colspan="-1">Aucun Pokémon trouvé.</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+			<div class="table-wrapper__actions">
+				<div class="table-wrapper__actions__pagination">
+					<form id="limitForm" method="get" action="{{ path('app_pokemon_list') }}">
+            <div class="form__row--inline">
+              <label for="limit" class="form__label">Nombre de résultats par page:</label>
+              <select class="input-select" name="limit" id="limit" onchange="document.getElementById('limitForm').submit()">
+                {% for limitOption in limitOptions %}
+                  <option class="input-select__option" value="{{ limitOption }}" {% if limitOption == limit %} selected {% endif %}>{{ limitOption }}</option>
+                {% endfor %}
+              </select>
+            </div>
+					</form>
+					{% if totalPages > 1 %}
+						<div class="paginator">
+							<section class="paginator__section">
+								<button class="paginator-button" {% if not hasPreviousPage %} disabled {% endif %} onclick="location.href='?page=1'">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<path d="m17 18-6-6 6-6"/>
+										<path d="M7 6v12"/>
+									</svg>
+								</button>
+								<button class="paginator-button" {% if not hasPreviousPage %} disabled {% endif %} onclick="location.href='?page={{ page - 1 }}'">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<path d="m15 18-6-6 6-6"/>
+									</svg>
+								</button>
+							</section>
+
+							<section class="paginator__section">
+								{% set startPage = max(1, page - 2) %}
+								{% set endPage = min(totalPages, page + 2) %}
+
+								{% if page <= 2 %}
+									{% set endPage = min(5, totalPages) %}
+								{% elseif page >= totalPages - 1 %}
+									{% set startPage = max(1, totalPages - 4) %}
+								{% endif %}
+
+								{% for i in startPage..endPage %}
+									{% if i == page %}
+										<button class="paginator-button" disabled data-paginator-current="true">{{ i }}</button>
+									{% else %}
+										<button class="paginator-button" onclick="location.href='?page={{ i }}'" data-paginator-current="false">{{ i }}</button>
+									{% endif %}
+								{% endfor %}
+							</section>
+
+							<section class="paginator__section">
+								<button class="paginator-button" {% if not hasNextPage %} disabled {% endif %} onclick="location.href='?page={{ page + 1 }}'">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<path d="m9 18 6-6-6-6"/>
+									</svg>
+								</button>
+
+								<button class="paginator-button" {% if not hasNextPage %} disabled {% endif %} onclick="location.href='?page={{ totalPages }}'">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<path d="m7 18 6-6-6-6"/>
+										<path d="M17 6v12"/>
+									</svg>
+								</button>
+							</section>
+						</div>
+					</div>
+				{% endif %}
+
+				<a class="btn btn--primary" href="{{ path('app_pokemon_new') }}">Ajouter un Pokémon</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
